@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+
+    overflow: hidden;
+    overscroll-behavior: none;
+
+    background: black;
+    color: white;
+ 
+    font-family: "Ubuntu", sans-serif;
+}
+
+body {
+    height: 100%;
+
+    display: grid;
+    place-items: center;
+}
+
+span {
+    user-select: none;
+}
+
+canvas {
+    z-index: 100;
+    
+    position: fixed;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    pointer-events: none;
+
+    mix-blend-mode: exclusion;
+}
+
+h1 {
+    font-size: min(10vw, 10vh);
+
+    text-transform: uppercase;
+
+    user-select: none;
+
+    letter-spacing: 2px;
+}
+
+#card {
+    display: flex;
+
+    flex-direction: row;
+
+    gap: 1rem;
+
+    animation: opening 0.5s forwards;
+}
+
+#card > img {
+    height: min(15vw, 15vh);
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    border-radius: 50%;
+}
+
+#socials {
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    padding-left: 6px;
+}
+
+#socials > a {
+    display: flex;
+
+    flex-direction: row;
+
+    gap: 0.25rem;
+
+    text-decoration: none;
+
+    color: white;
+}
+
+#socials img {
+    width: 1.25rem;
+    height: 1.25rem;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+}
+
+#toggle {
+    position: fixed;
+
+    bottom: 1rem;
+    right: 1rem;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+
+    color: white;
+}
+
+#toggle:hover {
+    text-decoration: underline;
+}
+
+@keyframes opening {
+    from {
+        opacity: 0;
+
+        transform: translateY(-0.5rem);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: none;
+    }
+}
+
+@media (max-width: 992px) {
+    #socials img {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    #socials p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 672px) {
+    #socials {
+        justify-content: flex-start;
+
+        gap: 1rem;
+    }
+
+    #socials p {
+        display: none;
+    }
+}
