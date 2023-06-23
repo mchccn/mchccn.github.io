@@ -26,7 +26,7 @@ const polygons = Array.from(
 
 let show = localStorage.getItem("show") ?? true;
 
-const toggle = document.querySelector("#toggle")!;
+const toggle = document.querySelector(".toggle")!;
 
 toggle.textContent = show ? "hide shapes" : "show shapes";
 
@@ -64,7 +64,7 @@ function update() {
         ctx.fill();
 
         polygon.angle += polygon.radius / 2500;
-        polygon.y += polygon.radius / 15;
+        polygon.y += polygon.radius / 20;
 
         if (dragged.includes(polygon)) {
             polygon.x = mouse.x;
@@ -105,3 +105,51 @@ window.addEventListener("mousedown", () => {
 window.addEventListener("mouseup", () => {
     dragged.length = 0;
 });
+
+const titles = [
+    "kelsny",
+    "_elsny",
+    "k_lsny",
+    "ke_sny",
+    "kel_ny",
+    "kels_y",
+    "kelsn_",
+];
+
+let i = 0;
+
+setInterval(() => document.title = titles[i = (i >= titles.length - 1 ? 0 : i + 1)], 1000);
+
+const card = document.querySelector<HTMLDivElement>(".card")!;
+const info = document.querySelector<HTMLDivElement>(".info")!;
+
+setTimeout(() => {
+    card.style.opacity = "1";
+    card.style.transform = "translateY(0)";
+    info.style.pointerEvents = "none";
+});
+
+// let delta = 0;
+
+// document.addEventListener("wheel", (e) => {
+//     const lastDelta = delta;
+//     delta = Math.max(0, Math.min(500, delta + e.deltaY));
+
+//     if (delta === 500 && lastDelta !== delta) {
+//         card.style.opacity = "0";
+//         card.style.transform = "scale(0.9)";
+//         card.style.pointerEvents = "none";
+//         info.style.opacity = "1";
+//         info.style.transform = "";
+//         info.style.pointerEvents = "";
+//     }
+
+//     if (delta === 0 && lastDelta !== delta) {
+//         card.style.opacity = "1";
+//         card.style.transform = "";
+//         card.style.pointerEvents = "";
+//         info.style.opacity = "0";
+//         info.style.transform = "";
+//         info.style.pointerEvents = "none";
+//     }
+// });
