@@ -29,6 +29,7 @@ let show = localStorage.getItem("show") ?? true;
 const toggle = document.querySelector(".toggle")!;
 
 toggle.textContent = show ? "hide shapes" : "show shapes";
+document.querySelector("h1")!.style["-webkit-text-fill-color" as never] = show ? "" : "transparent";
 
 toggle.addEventListener("click", () => {
     show = !show;
@@ -36,6 +37,8 @@ toggle.addEventListener("click", () => {
     if (show) requestAnimationFrame(update);
 
     toggle.textContent = show ? "hide shapes" : "show shapes";
+
+    document.querySelector("h1")!.style["-webkit-text-fill-color" as never] = show ? "" : "transparent";
 
     localStorage.setItem("show", show ? "true" : "");
 });

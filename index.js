@@ -21,11 +21,13 @@ const polygons = Array.from({ length: 48 }, () => new RegularPolygon(Math.random
 let show = localStorage.getItem("show") ?? true;
 const toggle = document.querySelector(".toggle");
 toggle.textContent = show ? "hide shapes" : "show shapes";
+document.querySelector("h1").style["-webkit-text-fill-color"] = show ? "" : "transparent";
 toggle.addEventListener("click", () => {
     show = !show;
     if (show)
         requestAnimationFrame(update);
     toggle.textContent = show ? "hide shapes" : "show shapes";
+    document.querySelector("h1").style["-webkit-text-fill-color"] = show ? "" : "transparent";
     localStorage.setItem("show", show ? "true" : "");
 });
 ctx.fillStyle = "white";

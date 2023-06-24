@@ -65,6 +65,9 @@ h1 {
     user-select: none;
 
     letter-spacing: 2px;
+
+    background: linear-gradient(45deg, #0057CB, #50BAD9);
+    -webkit-background-clip: text;
 }
 
 .card {
@@ -146,6 +149,8 @@ h1 {
     color: white;
 
     user-select: none;
+
+    outline: none;
 }
 
 .toggle:hover {
