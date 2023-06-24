@@ -67,7 +67,7 @@ h1 {
     letter-spacing: 2px;
 
     background: linear-gradient(45deg, #0057cb, #50bad9);
-    background-clip: text;
+    -webkit-background-clip: text;
 }
 
 .card {
