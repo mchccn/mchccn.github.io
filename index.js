@@ -36,11 +36,11 @@ function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!show)
         return;
-    const polygonCount = Math.ceil(window.innerWidth * window.innerHeight / 100000 * 0.75);
+    const polygonCount = Math.ceil(((window.innerWidth * window.innerHeight) / 100000) * 0.75);
     polygons.slice(0, polygonCount).forEach((polygon) => {
         const [start, ...vertices] = [...Array(polygon.n).keys()].map((i) => [
-            polygon.x + Math.cos(polygon.angle + (2 * Math.PI / polygon.n * i)) * polygon.radius,
-            polygon.y + Math.sin(polygon.angle + (2 * Math.PI / polygon.n * i)) * polygon.radius,
+            polygon.x + Math.cos(polygon.angle + ((2 * Math.PI) / polygon.n) * i) * polygon.radius,
+            polygon.y + Math.sin(polygon.angle + ((2 * Math.PI) / polygon.n) * i) * polygon.radius,
         ]);
         ctx.beginPath();
         ctx.moveTo(...start);
@@ -69,10 +69,13 @@ window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
-const mouse = { x: -1, y: -1, down: false };
+const mouse = { x: -1, y: -1, down: false, idle: setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000) };
 window.addEventListener("mousemove", (e) => {
+    document.body.style.cursor = "";
     mouse.x = e.clientX;
     mouse.y = e.clientY;
+    clearInterval(mouse.idle);
+    mouse.idle = setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000);
 });
 window.addEventListener("mousedown", () => {
     if (show)
@@ -91,7 +94,7 @@ const titles = [
     "kelsn_",
 ];
 let i = 0;
-setInterval(() => document.title = titles[i = (i >= titles.length - 1 ? 0 : i + 1)], 1000);
+setInterval(() => (document.title = titles[(i = i >= titles.length - 1 ? 0 : i + 1)]), 1000);
 const card = document.querySelector(".card");
 const info = document.querySelector(".info");
 setTimeout(() => {
@@ -101,22 +104,22 @@ setTimeout(() => {
 });
 // let delta = 0;
 // document.addEventListener("wheel", (e) => {
-//     const lastDelta = delta;
-//     delta = Math.max(0, Math.min(500, delta + e.deltaY));
-//     if (delta === 500 && lastDelta !== delta) {
-//         card.style.opacity = "0";
-//         card.style.transform = "scale(0.9)";
-//         card.style.pointerEvents = "none";
-//         info.style.opacity = "1";
-//         info.style.transform = "";
-//         info.style.pointerEvents = "";
-//     }
-//     if (delta === 0 && lastDelta !== delta) {
-//         card.style.opacity = "1";
-//         card.style.transform = "";
-//         card.style.pointerEvents = "";
-//         info.style.opacity = "0";
-//         info.style.transform = "";
-//         info.style.pointerEvents = "none";
-//     }
+//         const lastDelta = delta;
+//         delta = Math.max(0, Math.min(500, delta + e.deltaY));
+//         if (delta === 500 && lastDelta !== delta) {
+//                 card.style.opacity = "0";
+//                 card.style.transform = "scale(0.9)";
+//                 card.style.pointerEvents = "none";
+//                 info.style.opacity = "1";
+//                 info.style.transform = "";
+//                 info.style.pointerEvents = "";
+//         }
+//         if (delta === 0 && lastDelta !== delta) {
+//                 card.style.opacity = "1";
+//                 card.style.transform = "";
+//                 card.style.pointerEvents = "";
+//                 info.style.opacity = "0";
+//                 info.style.transform = "";
+//                 info.style.pointerEvents = "none";
+//         }
 // });
