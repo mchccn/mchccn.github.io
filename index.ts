@@ -10,19 +10,31 @@ class RegularPolygon {
         public n: number,
         public radius = 1,
         public angle = 0,
+        public heading = Math.PI / 2,
     ) {}
+
+    static random() {
+        const radius = Math.random() * 75 + 50;
+
+        const [x, y, heading] = [
+            [Math.random() * canvas.width, -radius, Math.random() * Math.PI],
+            [Math.random() * canvas.width, canvas.height + radius, Math.random() * -Math.PI],
+            [-radius, Math.random() * canvas.height, Math.random() * Math.PI - Math.PI / 2],
+            [canvas.width + radius, Math.random() * canvas.height, Math.random() * -Math.PI - Math.PI / 2],
+        ][Math.floor(Math.random() * 4)];
+
+        return new RegularPolygon(
+            x,
+            y,
+            Math.floor(Math.random() * 3 + 3),
+            Math.random() * 75 + 50,
+            Math.random() * 2 * Math.PI,
+            heading,
+        );
+    }
 }
 
-const polygons = Array.from(
-    { length: 48 },
-    () => new RegularPolygon(
-        Math.random() * canvas.width,
-        Math.random() * canvas.height,
-        Math.floor(Math.random() * 3 + 3),
-        Math.random() * 75 + 50,
-        Math.random() * 2 * Math.PI,
-    ),
-);
+const polygons = Array.from({ length: 48 }, RegularPolygon.random);
 
 let show = localStorage.getItem("show") ?? true;
 
@@ -69,19 +81,20 @@ function update() {
         ctx.fill();
 
         polygon.angle += polygon.radius / 2500;
-        polygon.y += polygon.radius / 20;
+        polygon.x += Math.cos(polygon.heading) * polygon.radius / 25;
+        polygon.y += Math.sin(polygon.heading) * polygon.radius / 25;
 
         if (dragged.includes(polygon)) {
             polygon.x = mouse.x;
             polygon.y = mouse.y;
         }
 
-        if (polygon.y > canvas.height + polygon.radius) {
-            polygon.x = Math.random() * canvas.width;
-            polygon.n = Math.floor(Math.random() * 3 + 3);
-            polygon.radius = Math.random() * 75 + 50;
-            polygon.angle = Math.random() * 2 * Math.PI;
-            polygon.y = -polygon.radius;
+        if (polygon.x < -polygon.radius ||
+            polygon.x > canvas.width + polygon.radius ||
+            polygon.y < -polygon.radius ||
+            polygon.y > canvas.height + polygon.radius
+        ) {
+            Object.assign(polygon, RegularPolygon.random());
         }
     });
 
@@ -95,7 +108,7 @@ window.addEventListener("resize", () => {
     canvas.height = window.innerHeight;
 });
 
-const mouse = { x: -1, y: -1, down: false, idle: setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000) };
+const mouse = { x: -1, y: -1, dx: -1, dy: -1, down: false, idle: setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000) };
 
 window.addEventListener("mousemove", (e) => {
     document.body.style.cursor = "";
@@ -108,7 +121,10 @@ window.addEventListener("mousemove", (e) => {
     mouse.idle = setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000);
 });
 
-window.addEventListener("mousedown", () => {
+window.addEventListener("mousedown", (e) => {
+    mouse.dx = e.clientX;
+    mouse.dy = e.clientY;
+
     if (show)
         dragged.push(
             ...polygons.filter(
@@ -118,6 +134,11 @@ window.addEventListener("mousedown", () => {
 });
 
 window.addEventListener("mouseup", () => {
+    for (const polygon of dragged) polygon.heading = Math.atan2(mouse.y - mouse.dy, mouse.x - mouse.dx);
+
+    mouse.dx = -1;
+    mouse.dy = -1;
+
     dragged.length = 0;
 });
 

@@ -9,15 +9,27 @@ class RegularPolygon {
     n;
     radius;
     angle;
-    constructor(x, y, n, radius = 1, angle = 0) {
+    heading;
+    constructor(x, y, n, radius = 1, angle = 0, heading = Math.PI / 2) {
         this.x = x;
         this.y = y;
         this.n = n;
         this.radius = radius;
         this.angle = angle;
+        this.heading = heading;
+    }
+    static random() {
+        const radius = Math.random() * 75 + 50;
+        const [x, y, heading] = [
+            [Math.random() * canvas.width, -radius, Math.random() * Math.PI],
+            [Math.random() * canvas.width, canvas.height + radius, Math.random() * -Math.PI],
+            [-radius, Math.random() * canvas.height, Math.random() * Math.PI - Math.PI / 2],
+            [canvas.width + radius, Math.random() * canvas.height, Math.random() * -Math.PI - Math.PI / 2],
+        ][Math.floor(Math.random() * 4)];
+        return new RegularPolygon(x, y, Math.floor(Math.random() * 3 + 3), Math.random() * 75 + 50, Math.random() * 2 * Math.PI, heading);
     }
 }
-const polygons = Array.from({ length: 48 }, () => new RegularPolygon(Math.random() * canvas.width, Math.random() * canvas.height, Math.floor(Math.random() * 3 + 3), Math.random() * 75 + 50, Math.random() * 2 * Math.PI));
+const polygons = Array.from({ length: 48 }, RegularPolygon.random);
 let show = localStorage.getItem("show") ?? true;
 const toggle = document.querySelector(".toggle");
 toggle.textContent = show ? "hide shapes" : "show shapes";
@@ -49,17 +61,17 @@ function update() {
         ctx.closePath();
         ctx.fill();
         polygon.angle += polygon.radius / 2500;
-        polygon.y += polygon.radius / 20;
+        polygon.x += Math.cos(polygon.heading) * polygon.radius / 25;
+        polygon.y += Math.sin(polygon.heading) * polygon.radius / 25;
         if (dragged.includes(polygon)) {
             polygon.x = mouse.x;
             polygon.y = mouse.y;
         }
-        if (polygon.y > canvas.height + polygon.radius) {
-            polygon.x = Math.random() * canvas.width;
-            polygon.n = Math.floor(Math.random() * 3 + 3);
-            polygon.radius = Math.random() * 75 + 50;
-            polygon.angle = Math.random() * 2 * Math.PI;
-            polygon.y = -polygon.radius;
+        if (polygon.x < -polygon.radius ||
+            polygon.x > canvas.width + polygon.radius ||
+            polygon.y < -polygon.radius ||
+            polygon.y > canvas.height + polygon.radius) {
+            Object.assign(polygon, RegularPolygon.random());
         }
     });
     requestAnimationFrame(update);
@@ -69,7 +81,7 @@ window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
-const mouse = { x: -1, y: -1, down: false, idle: setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000) };
+const mouse = { x: -1, y: -1, dx: -1, dy: -1, down: false, idle: setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000) };
 window.addEventListener("mousemove", (e) => {
     document.body.style.cursor = "";
     mouse.x = e.clientX;
@@ -77,11 +89,17 @@ window.addEventListener("mousemove", (e) => {
     clearInterval(mouse.idle);
     mouse.idle = setTimeout(() => (document.body.style.cursor = "none"), 10 * 1000);
 });
-window.addEventListener("mousedown", () => {
+window.addEventListener("mousedown", (e) => {
+    mouse.dx = e.clientX;
+    mouse.dy = e.clientY;
     if (show)
         dragged.push(...polygons.filter((p) => Math.hypot(mouse.x - p.x, mouse.y - p.y) < p.radius));
 });
 window.addEventListener("mouseup", () => {
+    for (const polygon of dragged)
+        polygon.heading = Math.atan2(mouse.y - mouse.dy, mouse.x - mouse.dx);
+    mouse.dx = -1;
+    mouse.dy = -1;
     dragged.length = 0;
 });
 const titles = [
