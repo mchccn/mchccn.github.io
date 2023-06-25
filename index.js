@@ -30,9 +30,9 @@ toggle.addEventListener("click", () => {
     document.querySelector("h1").style["-webkit-text-fill-color"] = show ? "" : "transparent";
     localStorage.setItem("show", show ? "true" : "");
 });
-ctx.fillStyle = "white";
 const dragged = [];
 function update() {
+    ctx.fillStyle = "white";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!show)
         return;

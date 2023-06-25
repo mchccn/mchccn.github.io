@@ -43,11 +43,11 @@ toggle.addEventListener("click", () => {
     localStorage.setItem("show", show ? "true" : "");
 });
 
-ctx.fillStyle = "white";
-
 const dragged: RegularPolygon[] = [];
 
 function update() {
+    ctx.fillStyle = "white";
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!show) return;
