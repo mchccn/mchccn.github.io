@@ -34,6 +34,8 @@ class RegularPolygon {
     }
 }
 
+const getPolygonCount = () => Math.ceil(((window.innerWidth * window.innerHeight) / 100000) * 0.75);
+
 const polygons = Array.from({ length: 48 }, RegularPolygon.random);
 
 let show = localStorage.getItem("show") ?? true;
@@ -58,13 +60,13 @@ toggle.addEventListener("click", () => {
 const dragged: RegularPolygon[] = [];
 
 function update() {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = rave.on ? rave.colors[(Date.now() % (rave.colors.length * 100)) / 100 | 0] : "white";
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!show) return;
 
-    const polygonCount = Math.ceil(((window.innerWidth * window.innerHeight) / 100000) * 0.75);
+    const polygonCount = getPolygonCount();
 
     polygons.slice(0, polygonCount).forEach((polygon) => {
         const [start, ...vertices] = [...Array(polygon.n).keys()].map(
@@ -127,14 +129,31 @@ window.addEventListener("mousedown", (e) => {
 
     if (show)
         dragged.push(
-            ...polygons.filter(
+            ...polygons.slice(0, getPolygonCount()).filter(
                 (p) => Math.hypot(mouse.x - p.x, mouse.y - p.y) < p.radius
             )
         );
 });
 
+const rave = {
+    on: false,
+    colors: [
+        "#ff6d4c",
+        "#ffc627",
+        "#a8ff41",
+        "#2ffff3",
+        "#f954ff",
+    ],
+};
+
 window.addEventListener("mouseup", () => {
-    for (const polygon of dragged) polygon.heading = Math.atan2(mouse.y - mouse.dy, mouse.x - mouse.dx);
+    if (dragged.length === getPolygonCount()) {
+        dragged.forEach((polygon) => polygon.heading = Math.random() * 2 * Math.PI);
+
+        rave.on = true;
+
+        setTimeout(() => rave.on = false, 5000);
+    } else for (const polygon of dragged) polygon.heading = Math.atan2(mouse.y - mouse.dy, mouse.x - mouse.dx);
 
     mouse.dx = -1;
     mouse.dy = -1;
