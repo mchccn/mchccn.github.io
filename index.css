@@ -81,6 +81,8 @@ h1 {
     transform: translateY(-0.5rem);
 
     transition: all 0.2s ease-in-out;
+
+    -webkit-user-drag: none;
 }
 
 .card > img {
