@@ -1,8 +1,9 @@
-# kelsny.github.io
+# [kelsny.github.io](https://kelsny.github.io)
 
-<!--
-    todo list
-    - clamp card content sizes
-    - improve shape dragging
-    - add easter egg when you "catch" all shapes
- -->
+collecting my website designs in one repo
+
+current design: [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
+
+all designs:
+
+- [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
