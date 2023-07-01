@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+
+    overflow: hidden;
+    overscroll-behavior: none;
+
+    background: black;
+    color: white;
+
+    font-family: "Ubuntu", sans-serif;
+}
+
+body {
+    height: 100%;
+
+    display: grid;
+    
+    place-items: center;
+}
+
+img {
+    user-select: none;
+
+    -webkit-user-drag: none;
+}
+
+.circle {
+    position: absolute;
+}
+
+.container {
+    position: relative;
+
+    perspective: 1000px;
+
+    perspective-origin: center;
+
+    animation: zoom-out 5s cubic-bezier(1, 0, 1, 0.1) forwards;
+    animation-play-state: paused;
+
+    transform-style: preserve-3d;
+}
+
+@keyframes zoom-out {
+    from {
+        perspective: 1000px;
+    }
+
+    to {
+        perspective: 1000000px;
+    }
+}
+}

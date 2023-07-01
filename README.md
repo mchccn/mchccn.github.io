@@ -7,3 +7,5 @@ current design: [polygon particles / mix-blend-mode exclusion](./polygon-particl
 all designs:
 
 - [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
+
+- [parallax portrait](/parallax-portrait/README.md)

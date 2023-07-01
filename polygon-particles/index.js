@@ -1,4 +1,3 @@
-"use strict";
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -137,24 +136,4 @@ setTimeout(() => {
     card.style.transform = "translateY(0)";
     info.style.pointerEvents = "none";
 });
-// let delta = 0;
-// document.addEventListener("wheel", (e) => {
-//         const lastDelta = delta;
-//         delta = Math.max(0, Math.min(500, delta + e.deltaY));
-//         if (delta === 500 && lastDelta !== delta) {
-//                 card.style.opacity = "0";
-//                 card.style.transform = "scale(0.9)";
-//                 card.style.pointerEvents = "none";
-//                 info.style.opacity = "1";
-//                 info.style.transform = "";
-//                 info.style.pointerEvents = "";
-//         }
-//         if (delta === 0 && lastDelta !== delta) {
-//                 card.style.opacity = "1";
-//                 card.style.transform = "";
-//                 card.style.pointerEvents = "";
-//                 info.style.opacity = "0";
-//                 info.style.transform = "";
-//                 info.style.pointerEvents = "none";
-//         }
-// });
+export {};
