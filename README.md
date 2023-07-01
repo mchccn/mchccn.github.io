@@ -4,8 +4,8 @@ collecting my website designs in one repo
 
 current design: [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
 
-all designs:
+all designs (name / technique):
 
 - [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
 
-- [parallax portrait](/parallax-portrait/README.md)
+- [parallax portrait / css perspective](/parallax-portrait/README.md)
