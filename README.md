@@ -1,11 +1,13 @@
-# [kelsny.github.io](https://kelsny.github.io)
+## polygon particles / mix-blend-mode exclusion
 
-collecting my website designs in one repo
+![](./polygon-particles.png)
 
-current design: [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
+very cool clean white on black design
 
-all designs (name / technique):
+when you drag all shapes under your cursor and let go, the shapes go rave mode
 
-- [polygon particles / mix-blend-mode exclusion](./polygon-particles/README.md)
+**todo list**
 
-- [parallax portrait / css perspective](/parallax-portrait/README.md)
+- clamp card content sizes
+
+- improve shape dragging
