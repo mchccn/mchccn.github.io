@@ -106,6 +106,7 @@ const rave = {
     ],
 };
 window.addEventListener("mouseup", () => {
+    // YOU RUINED THE SURPRISE!!!
     if (dragged.length === getPolygonCount()) {
         dragged.forEach((polygon) => polygon.heading = Math.random() * 2 * Math.PI);
         rave.on = true;
