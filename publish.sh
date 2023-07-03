@@ -9,19 +9,15 @@ git branch -D gh-pages
 
 git checkout -b gh-pages
 
-cp -r $1 _temp
+mv $1/* .
 
-rm -r !(_temp)
-
-mv _temp/* .
-
-rmdir _temp
+rmdir $1
 
 git add .
 
 git commit -m "publish $1"
 
-git push -u origin gh-pages
+git push -u origin gh-pages --force
 
 git switch master
 
