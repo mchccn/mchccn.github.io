@@ -120,13 +120,13 @@ window.addEventListener("mouseup", () => {
     dragged.length = 0;
 });
 const titles = [
-    "kelsny",
-    "_elsny",
-    "k_lsny",
-    "ke_sny",
-    "kel_ny",
-    "kels_y",
-    "kelsn_",
+    "mchccn",
+    "_chccn",
+    "m_hccn",
+    "mc_ccn",
+    "mch_cn",
+    "mchc_n",
+    "mchcc_",
 ];
 let i = 0;
 setInterval(() => (document.title = titles[(i = i >= titles.length - 1 ? 0 : i + 1)]), 1000);
